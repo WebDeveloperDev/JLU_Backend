@@ -43,12 +43,12 @@ exports.loginUser = async (req, res) => {
     );
 
     // Send token as an HTTP-only cookie
-  res.cookie("token", token, {
-    httpOnly: true, // accessible in JavaScript (not secure for real tokens)
-    secure: false,   // important for local dev
-    sameSite: "Lax", // allows sending cookie across frontend/backend ports
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-  });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Set to true in production
+      sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
 
     res.status(200).json({
       message: "Login successful",
@@ -66,19 +66,6 @@ exports.loginUser = async (req, res) => {
 exports.logoutUser = (req, res) => {
   res.clearCookie("token").json({ message: "Logged out successfully" });
 };
-
-exports.verify = (req, res) => {
-  const token = req.cookies.token;
-  if (!token) return res.status(401).json({ message: "Not logged in" });
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    res.json({ loggedIn: true, user: decoded });
-  } catch (err) {
-    res.status(401).json({ message: "Invalid token" });
-  }
-};
-
 
 
 exports.addNote = async (req, res) => {

@@ -9,9 +9,18 @@ connectDB();
 
 const app = express();
 app.use(express.json());
+
+const allowedOrigins = ['http://localhost:5173', 'https://your-production-site.com'];
+
 app.use(cors({
-  origin: "http://localhost:5173",
-  credentials:true
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
 app.use(cookieParser());
 

@@ -7,8 +7,7 @@ const {
   getNotes,
   deleteNote,
   updateNote,
-  markNoteStatus,
-  verify
+  markNoteStatus
 } = require("../controllers/userController");
 const authenticate = require("../middleware/authMiddleware");
 
@@ -23,8 +22,6 @@ router.post("/login", loginUser);
 // Route to log out a user
 router.post("/logout", logoutUser);
 
-//Route to verify login
-router.get("/verify",verify);
 // Route to add a note (Protected)
 router.post("/addNote", authenticate, addNote);
 
