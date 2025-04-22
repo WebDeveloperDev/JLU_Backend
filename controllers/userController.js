@@ -44,7 +44,7 @@ exports.loginUser = async (req, res) => {
 
     // Send token as an HTTP-only cookie
   res.cookie("token", token, {
-    httpOnly: false, // accessible in JavaScript (not secure for real tokens)
+    httpOnly: true, // accessible in JavaScript (not secure for real tokens)
     secure: false,   // important for local dev
     sameSite: "Lax", // allows sending cookie across frontend/backend ports
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
