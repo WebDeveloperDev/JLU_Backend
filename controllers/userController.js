@@ -67,6 +67,18 @@ exports.logoutUser = (req, res) => {
   res.clearCookie("token").json({ message: "Logged out successfully" });
 };
 
+exports.verify=(req, res) => {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ message: "Not logged in" });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.json({ loggedIn: true, user: decoded });
+  } catch (err) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+});
+
 
 exports.addNote = async (req, res) => {
   const { content } = req.body;
