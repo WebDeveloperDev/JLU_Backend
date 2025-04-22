@@ -67,7 +67,7 @@ exports.logoutUser = (req, res) => {
   res.clearCookie("token").json({ message: "Logged out successfully" });
 };
 
-exports.verify=(req, res) => {
+exports.verify = (req, res) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ message: "Not logged in" });
 
@@ -77,7 +77,8 @@ exports.verify=(req, res) => {
   } catch (err) {
     res.status(401).json({ message: "Invalid token" });
   }
-});
+};
+
 
 
 exports.addNote = async (req, res) => {
