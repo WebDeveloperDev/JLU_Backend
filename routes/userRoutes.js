@@ -24,7 +24,7 @@ router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 
 //Route to verify login
-router.get("/verify")
+router.get("/verify",verify);
 // Route to add a note (Protected)
 router.post("/addNote", authenticate, addNote);
 
