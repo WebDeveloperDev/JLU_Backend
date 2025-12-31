@@ -13,15 +13,10 @@ app.use(express.json());
 const allowedOrigins = ['http://localhost:5173', 'https://your-production-site.com'];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
+  origin: allowedOrigins,   // allow your frontend
+  credentials: true         // allow cookies to be sen
 }));
+
 app.use(cookieParser());
 
 // Load user routes
